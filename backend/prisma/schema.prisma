@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Student {
+  id String @id @default(uuid())
+  name String
+  age Int
+  actions Action[]
+  createdAt DateTime @default(now())
+}
+
+model Action {
+  id String @id @default(uuid())
+  type ActionType
+  points Int
+  student Student @relation(fields: [studentId], references: [id])
+  studentId String
+  createdAt DateTime @default(now())
+}
+
+model Teacher {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  createdAt DateTime @default(now())
+}
+
+enum ActionType {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+}
+
+
