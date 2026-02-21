@@ -18,17 +18,37 @@ class StudentRepository {
       }
     });
   }
-
   async findById(id) {
     return prisma.student.findUnique({
-      where: { id }
+      where: { id },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+            createdAt: true
+          }
+        }
+      }
     });
   }
-
   async findAll() {
-    return prisma.student.findMany();
+    return prisma.student.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+            createdAt: true
+          }
+        }
+      }
+    });
   }
-
 }
 
 export default new StudentRepository();
