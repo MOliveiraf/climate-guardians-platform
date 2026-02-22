@@ -30,7 +30,6 @@ class StudentService {
         delete student.user.password;
       }
       return student;
-
     } catch (error) {
       if (error.code === "P2002" && error.meta?.target?.includes("email")) {
         throw new Error("Email já cadastrado.");
@@ -38,11 +37,21 @@ class StudentService {
       throw error;
     }
   }
-   async getAllStudents() {
+  async getAllStudents() {
     const students = await studentRepository.findAll();
 
     // Remover senha de todos
-    return students.map(student => {
+    return students.map((student) => {
+      if (student.user?.password) {
+        delete student.user.password;
+      }
+      return student;
+    });
+  }
+  async searchStudents(query) {
+    const students = await studentRepository.search(query);
+
+    return students.map((student) => {
       if (student.user?.password) {
         delete student.user.password;
       }
@@ -61,7 +70,44 @@ class StudentService {
 
     return student;
   }
+  async updateStudent(id, data) {
+    const existingStudent = await studentRepository.findById(id);
 
+    if (!existingStudent) {
+      throw new Error("Student not found.");
+    }
+
+    const updatedData = { ...data };
+
+    // Se vier atualização de usuário
+    if (data.user?.update) {
+      const { password } = data.user.update;
+
+      if (password) {
+        const saltRounds = 10;
+        const passwordHash = await bcrypt.hash(password, saltRounds);
+        updatedData.user.update.password = passwordHash;
+      }
+    }
+
+    const updatedStudent = await studentRepository.update(id, updatedData);
+
+    if (updatedStudent.user?.password) {
+      delete updatedStudent.user.password;
+    }
+
+    return updatedStudent;
+  }
+
+  async deleteStudent(id) {
+    const existingStudent = await studentRepository.findById(id);
+
+    if (!existingStudent) {
+      throw new Error("Student not found.");
+    }
+
+    return studentRepository.delete(id);
+  }
 }
 
 export default new StudentService();
