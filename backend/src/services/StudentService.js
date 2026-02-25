@@ -7,33 +7,24 @@ class StudentService {
       const { name, age, user } = data;
       const { name: userName, email, password } = user.create;
 
-      // 1. Hash da senha
-      const saltRounds = 10;
-      const passwordHash = await bcrypt.hash(password, saltRounds);
+      // Criar usuário através do UserService
+      const createdUser = await userService.createUser({
+        name: userName,
+        email,
+        password,
+        role: "STUDENT"
+      });
 
-      // 2. Montar objeto já correto pro Prisma
+      // Criar student usando apenas o userId
       const student = await studentRepository.create({
         name,
         age,
-        user: {
-          create: {
-            name: userName,
-            email,
-            password: passwordHash,
-            role: "STUDENT",
-          },
-        },
+        userId: createdUser.id
       });
 
-      // 3. Nunca devolver senha
-      if (student.user?.password) {
-        delete student.user.password;
-      }
       return student;
+
     } catch (error) {
-      if (error.code === "P2002" && error.meta?.target?.includes("email")) {
-        throw new Error("Email já cadastrado.");
-      }
       throw error;
     }
   }
