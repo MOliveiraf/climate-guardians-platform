@@ -1,7 +1,10 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     async function fetchStudents() {
       try {
@@ -15,9 +18,15 @@ export default function Dashboard() {
     fetchStudents();
   }, []);
 
+  function handleLogout() {
+    localStorage.removeItem("token");
+    navigate("/");
+  }
+
   return (
     <div>
       <h1>Dashboard</h1>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }
