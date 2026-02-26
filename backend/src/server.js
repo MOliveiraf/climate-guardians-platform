@@ -1,7 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import studentRoutes from "./routes/student.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
 const PORT = 3000;
@@ -11,6 +15,7 @@ app.use(express.json());
 
 app.use("/students", studentRoutes);
 app.use("/users", userRoutes);
+app.use("/auth", authRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
