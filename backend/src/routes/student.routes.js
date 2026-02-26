@@ -4,11 +4,14 @@ import { authenticate } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
+// Público (cadastro)
 router.post("/", studentController.create);
+
+// Protegidas
 router.get("/", authenticate, studentController.findAll);
-router.get("/search", studentController.search);
-router.get("/:id", studentController.findById);
-router.put("/:id", studentController.update);
-router.delete("/:id", studentController.delete);
+router.get("/search", authenticate, studentController.search);
+router.get("/:id", authenticate, studentController.findById);
+router.put("/:id", authenticate, studentController.update);
+router.delete("/:id", authenticate, studentController.delete);
 
 export default router;
