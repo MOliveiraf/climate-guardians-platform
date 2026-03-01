@@ -1,5 +1,83 @@
+// generator client {
+//   provider = "prisma-client-js"  
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// model User {
+//   id        Int   @id @default(autoincrement())
+//   name      String
+//   email     String   @unique
+//   password  String
+//   role      UserRole
+//   student   Student?
+//   teacher   Teacher?
+//   createdAt DateTime @default(now())
+// }
+
+// model Student {
+//   id        Int   @id @default(autoincrement())
+//   name      String
+//   user      User     @relation(fields: [userId], references: [id])
+//   userId    Int   @unique
+//   age       Int
+//   actions   Action[]
+//   sessions  Session[]
+//   createdAt DateTime @default(now())
+// }
+
+
+// model Teacher {
+//   id        Int   @id @default(autoincrement())
+//   user      User     @relation(fields: [userId], references: [id])
+//   userId    Int   @unique
+//   createdAt DateTime @default(now())
+// }
+
+// model Action {
+//   id        Int   @id @default(autoincrement())
+//   type      ActionType
+//   points    Int
+//   student   Student @relation(fields: [studentId], references: [id])
+//   studentId Int
+//   createdAt DateTime @default(now())
+// }
+
+// enum ActionType {
+//   POSITIVE
+//   NEUTRAL
+//   NEGATIVE
+// }
+
+// enum UserRole {
+//   STUDENT
+//   TEACHER
+// }
+
+// model Session {
+//   id        Int   @id @default(autoincrement())
+//   student   Student @relation(fields: [studentId], references: [id])
+//   studentId Int
+//   startedAt DateTime @default(now())
+//   endedAt   DateTime?
+//   histories History[]
+// }
+
+// model History {
+//   id        Int   @id @default(autoincrement())
+//   session   Session @relation(fields: [sessionId], references: [id])
+//   sessionId Int
+//   action    ActionType
+//   points    Int
+//   createdAt DateTime @default(now())
+// }
+
+
 generator client {
-  provider = "prisma-client-js"  
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -24,11 +102,11 @@ model Student {
   user      User     @relation(fields: [userId], references: [id])
   userId    Int   @unique
   age       Int
-  actions   Action[]
-  sessions  Session[]
   createdAt DateTime @default(now())
-}
 
+  sessions  Session[]
+  actions   StudentAction[]
+}
 
 model Teacher {
   id        Int   @id @default(autoincrement())
@@ -38,12 +116,43 @@ model Teacher {
 }
 
 model Action {
+  id          Int   @id @default(autoincrement())
+  title       String
+  description String?
+  type        ActionType
+  points      Int
+  imageUrl    String?
+  audioUrl    String?
+  createdAt   DateTime @default(now())
+
+  executions  StudentAction[]
+}
+
+model StudentAction {
   id        Int   @id @default(autoincrement())
-  type      ActionType
-  points    Int
+
   student   Student @relation(fields: [studentId], references: [id])
   studentId Int
+
+  action    Action @relation(fields: [actionId], references: [id])
+  actionId  Int
+
+  session   Session? @relation(fields: [sessionId], references: [id])
+  sessionId Int?
+
   createdAt DateTime @default(now())
+}
+
+model Session {
+  id        Int   @id @default(autoincrement())
+
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId Int
+
+  startedAt DateTime @default(now())
+  endedAt   DateTime?
+
+  actions   StudentAction[]
 }
 
 enum ActionType {
@@ -55,22 +164,4 @@ enum ActionType {
 enum UserRole {
   STUDENT
   TEACHER
-}
-
-model Session {
-  id        Int   @id @default(autoincrement())
-  student   Student @relation(fields: [studentId], references: [id])
-  studentId Int
-  startedAt DateTime @default(now())
-  endedAt   DateTime?
-  histories History[]
-}
-
-model History {
-  id        Int   @id @default(autoincrement())
-  session   Session @relation(fields: [sessionId], references: [id])
-  sessionId Int
-  action    ActionType
-  points    Int
-  createdAt DateTime @default(now())
 }
