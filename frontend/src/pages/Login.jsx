@@ -11,19 +11,12 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/auth/login",
-        {
-          email,
-          password,
-        }
-      );
-      console.log("TOKEN DIRETO:", response.data.token);
-console.log("TOKEN DENTRO USER:", response.data.user?.token);
+      const response = await axios.post("http://localhost:3000/auth/login", {
+        email,
+        password,
+      });
 
-    //   const { token } = response.data;
-    //   localStorage.setItem("token", token);
-    localStorage.setItem("token", response.data.user.token);
+      localStorage.setItem("token", response.data.user.token);
 
       navigate("/dashboard");
     } catch (error) {
@@ -33,30 +26,32 @@ console.log("TOKEN DENTRO USER:", response.data.user?.token);
   }
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="login-container">
+      <div>
+        <h1>Login</h1>
 
-      <form onSubmit={handleLogin}>
-        <div>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+        <form onSubmit={handleLogin}>
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-        <div>
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-        <button type="submit">Login</button>
-      </form>
+          <button type="submit">Login</button>
+        </form>
+      </div>
     </div>
   );
 }

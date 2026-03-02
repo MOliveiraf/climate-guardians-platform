@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import studentRepository from "../repositories/student.repository.js";
-import userService from "../services/UserService.js"
+import userService from "../services/UserService.js";
 
 class StudentService {
   async createStudent(data) {
@@ -13,18 +13,17 @@ class StudentService {
         name: userName,
         email,
         password,
-        role: "STUDENT"
+        role: "STUDENT",
       });
 
       // Criar student usando apenas o userId
       const student = await studentRepository.create({
         name,
         age,
-        userId: createdUser.id
+        userId: createdUser.id,
       });
 
       return student;
-
     } catch (error) {
       throw error;
     }

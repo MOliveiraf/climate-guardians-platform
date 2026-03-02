@@ -1,7 +1,6 @@
 import actionService from "../services/ActionService.js";
 
 class ActionController {
-
   async findAll(req, res) {
     try {
       const actions = await actionService.getAllActions();
@@ -22,12 +21,10 @@ class ActionController {
       const action = await actionService.getActionById(id);
 
       return res.status(200).json(action);
-
     } catch (error) {
       return res.status(404).json({ message: error.message });
     }
   }
-
 }
 
 export default new ActionController();

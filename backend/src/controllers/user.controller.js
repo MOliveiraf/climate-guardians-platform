@@ -1,7 +1,6 @@
 import userService from "../services/UserService.js";
 
 class UserController {
-
   async create(req, res) {
     try {
       const user = await userService.createUser(req.body);
@@ -42,14 +41,12 @@ class UserController {
       await userService.deleteUser(id);
 
       return res.status(200).json({
-        message: `User ${id} deleted successfully`
+        message: `User ${id} deleted successfully`,
       });
-
     } catch (error) {
       return res.status(400).json({ message: error.message });
     }
   }
-
 }
 
 export default new UserController();

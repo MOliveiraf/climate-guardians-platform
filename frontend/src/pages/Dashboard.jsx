@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
@@ -16,6 +16,21 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState([]);
 
+  const audioRef = useRef(null);
+
+  function playAudio(url) {
+    if (!url) return;
+
+    // Se já existir um áudio tocando, parar
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+
+    const audio = new Audio(`http://localhost:3000${url}`);
+    audioRef.current = audio;
+    audio.play();
+  }
+
   async function fetchActions() {
     try {
       const response = await api.get("/actions");
@@ -24,14 +39,15 @@ export default function Dashboard() {
       console.error("Erro ao buscar ações:", error);
     }
   }
+
   async function fetchHistory() {
-  try {
-    const response = await api.get("/student-actions/history");
-    setHistory(response.data);
-  } catch (error) {
-    console.error("Erro ao buscar histórico:", error);
+    try {
+      const response = await api.get("/student-actions/history");
+      setHistory(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar histórico:", error);
+    }
   }
-}
 
   async function fetchPlanet() {
     try {
@@ -61,16 +77,11 @@ export default function Dashboard() {
 
       alert("Ação registrada com sucesso!");
 
-       // 🔊 tocar áudio educativo
-    if (result.audioUrl) {
-      const audio = new Audio(`http://localhost:3000${result.audioUrl}`);
-      audio.play();
-    }
-
       await fetchRanking();
       await fetchPlanet();
       await fetchHistory();
-      
+
+      return result;
     } catch (error) {
       alert(error.response?.data?.message || "Erro ao executar ação");
     }
@@ -98,28 +109,28 @@ export default function Dashboard() {
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Climate Guardians Dashboard</h1>
+    <div className="app-container">
+      <div style={{ padding: "20px" }}>
+        <h1>Climate Guardians Dashboard</h1>
 
-      <button onClick={handleLogout}>Logout</button>
+        <button onClick={handleLogout}>Logout</button>
 
-      <hr />
+        <hr />
+        <PlanetStatus planet={planet} />
+        <hr />
 
-      <PlanetStatus planet={planet} />
+        <ActionsList
+          actions={actions}
+          executeAction={executeAction}
+          playAudio={playAudio}
+        />
 
-      <hr />
+        <hr />
+        <RankingList ranking={ranking} />
+        <hr />
 
-      <ActionsList
-        actions={actions}
-        executeAction={executeAction}
-      />
-
-      <hr />
-
-      <RankingList ranking={ranking} />
-      <hr />
-
-<ActionHistory history={history} />
+        <ActionHistory history={history} playAudio={playAudio} />
+      </div>
     </div>
   );
 }

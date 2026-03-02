@@ -1,68 +1,127 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  font-family: "Comic Sans MS", "Poppins", system-ui, sans-serif;
   min-height: 100vh;
+  background: linear-gradient(135deg, #74c0fc, #a5d8ff, #d0ebff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-container {
+  width: 95%;
+  max-width: 1000px;
+  background: white;
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  text-align: center;
+  font-size: 2.5rem;
+  color: #2b8a3e;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-bottom: 10px;
+  color: #1971c2;
+}
+
+.planet-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.planet-container img {
+  width: 220px;
+  transition: transform 0.3s ease;
+}
+
+.planet-container img:hover {
+  transform: scale(1.05);
+}
+
+.score-box {
+  background: #e6fcf5;
+  padding: 15px 25px;
+  border-radius: 20px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #087f5b;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  background: #4dabf7;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: all 0.2s ease;
+  margin: 5px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+button:hover {
+  background: #339af0;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.card {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 12px;
+  border-radius: 15px;
+  border: 2px solid #a5d8ff;
+  width: 100%;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4dabf7;
+}
+
+.login-container {
+  width: 350px;
+  background: white;
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.login-container h1 {
+  color: #2b8a3e;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .planet-container img {
+    width: 150px;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+
+  h1 {
+    font-size: 2rem;
   }
 }

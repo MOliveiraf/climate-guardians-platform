@@ -2,7 +2,6 @@ import bcrypt from "bcrypt";
 import userRepository from "../repositories/user.repository.js";
 
 class UserService {
-
   async createUser(data) {
     try {
       const { name, email, password, role } = data;
@@ -21,11 +20,10 @@ class UserService {
         name,
         email,
         password: passwordHash,
-        role
+        role,
       });
 
       return user;
-
     } catch (error) {
       throw error;
     }

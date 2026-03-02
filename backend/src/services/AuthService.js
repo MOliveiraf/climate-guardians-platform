@@ -16,10 +16,8 @@ class AuthService {
       throw new Error("Invalid credentials");
     }
 
-    // Remove password
     const { password: _, ...userWithoutPassword } = user;
 
-    // Gera token
     const token = jwt.sign(
       {
         id: user.id,
@@ -28,7 +26,7 @@ class AuthService {
       process.env.JWT_SECRET,
       {
         expiresIn: process.env.JWT_EXPIRES_IN,
-      }
+      },
     );
 
     return {

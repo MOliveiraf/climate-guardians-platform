@@ -1,11 +1,11 @@
-export default function ActionHistory({ history }) {
+export default function ActionHistory({ history, playAudio }) {
   function formatDate(date) {
     const d = new Date(date);
 
     return d.toLocaleDateString("pt-BR", {
       day: "2-digit",
       month: "2-digit",
-      year: "numeric"
+      year: "numeric",
     });
   }
 
@@ -26,23 +26,32 @@ export default function ActionHistory({ history }) {
             background: "#7d6262",
             display: "flex",
             alignItems: "center",
-            gap: "10px"
+            gap: "10px",
           }}
         >
           <img
-      src={`http://localhost:3000${item.action.imageUrl}`}
-      alt={item.action.title}
-      width="50"
-    />
-          <div style={{ fontWeight: "bold" }}>
-            {item.action.title}
-          </div>
+            src={`http://localhost:3000${item.action.imageUrl}`}
+            alt={item.action.title}
+            width="50"
+          />
+
+          <div style={{ fontWeight: "bold" }}>{item.action.title}</div>
 
           <div>⭐ +{item.action.points} pts</div>
 
           <div style={{ fontSize: "12px", color: "#666" }}>
             📅 {formatDate(item.createdAt)}
           </div>
+
+          {/* 🔊 Botão para ouvir novamente */}
+          {item.action.audioUrl && (
+            <button
+              style={{ marginLeft: "auto" }}
+              onClick={() => playAudio(item.action.audioUrl)}
+            >
+              🔊 Hear Again
+            </button>
+          )}
         </div>
       ))}
     </div>

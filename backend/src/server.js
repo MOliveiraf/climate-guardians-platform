@@ -3,6 +3,7 @@ dotenv.config();
 
 import express from "express";
 import cors from "cors";
+import path from "path";
 import studentRoutes from "./routes/student.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -14,6 +15,8 @@ const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
+
+app.use(express.static(path.join(process.cwd(), "public")));
 
 app.use("/students", studentRoutes);
 app.use("/users", userRoutes);

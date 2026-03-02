@@ -1,7 +1,6 @@
 import studentActionService from "../services/StudentActionService.js";
 
 class StudentActionController {
-
   async execute(req, res) {
     try {
       const userId = req.user.id;
@@ -9,20 +8,19 @@ class StudentActionController {
 
       if (!actionId) {
         return res.status(400).json({
-          message: "actionId is required"
+          message: "actionId is required",
         });
       }
 
       const result = await studentActionService.executeAction(
         userId,
-        Number(actionId)
+        Number(actionId),
       );
 
       return res.status(201).json(result);
-
     } catch (error) {
       return res.status(400).json({
-        message: error.message
+        message: error.message,
       });
     }
   }
@@ -34,46 +32,36 @@ class StudentActionController {
       const history = await studentActionService.getHistory(userId);
 
       return res.status(200).json(history);
-
     } catch (error) {
       return res.status(400).json({
-        message: error.message
+        message: error.message,
       });
     }
   }
 
   async getScore(req, res) {
-  try {
+    try {
+      const score = await studentActionService.getScore(req.user.id);
 
-    const score = await studentActionService.getScore(req.user.id);
-
-    return res.status(200).json(score);
-
-  } catch (error) {
-
-    return res.status(400).json({
-      message: error.message
-    });
-
+      return res.status(200).json(score);
+    } catch (error) {
+      return res.status(400).json({
+        message: error.message,
+      });
+    }
   }
-}
 
-async ranking(req, res) {
-  try {
+  async ranking(req, res) {
+    try {
+      const ranking = await studentActionService.getRanking();
 
-    const ranking = await studentActionService.getRanking();
-
-    return res.status(200).json(ranking);
-
-  } catch (error) {
-
-    return res.status(400).json({
-      message: error.message
-    });
-
+      return res.status(200).json(ranking);
+    } catch (error) {
+      return res.status(400).json({
+        message: error.message,
+      });
+    }
   }
-}
-
 }
 
 export default new StudentActionController();

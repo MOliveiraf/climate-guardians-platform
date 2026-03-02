@@ -1,7 +1,6 @@
 import studentService from "../services/StudentService.js";
 
 class StudentController {
-
   async create(req, res) {
     try {
       const student = await studentService.createStudent(req.body);
@@ -20,32 +19,31 @@ class StudentController {
     }
   }
   async search(req, res) {
-  try {
-    const { query } = req.query;
+    try {
+      const { query } = req.query;
 
-    if (!query) {
-      return res.status(400).json({ message: "Query parameter is required" });
+      if (!query) {
+        return res.status(400).json({ message: "Query parameter is required" });
+      }
+
+      const students = await studentService.searchStudents(query);
+
+      return res.status(200).json(students);
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
     }
-
-    const students = await studentService.searchStudents(query);
-
-    return res.status(200).json(students);
-
-  } catch (error) {
-    return res.status(400).json({ message: error.message });
   }
-}
 
   async findById(req, res) {
     try {
-      const id = Number(req.params.id);      
+      const id = Number(req.params.id);
 
       if (isNaN(id)) {
         return res.status(404).json({ message: "Invalid ID format" });
       }
       const student = await studentService.getStudentById(id);
-      
-      if(!student) {
+
+      if (!student) {
         return res.status(404).json({ message: "Student not found" });
       }
 
@@ -89,13 +87,12 @@ class StudentController {
       }
 
       return res.status(200).json({
-        message: `Student ${deleteStudent.name} deleted successfully`
+        message: `Student ${deleteStudent.name} deleted successfully`,
       });
     } catch (error) {
       return res.status(400).json({ message: error.message });
     }
   }
-
 }
 
 export default new StudentController();
