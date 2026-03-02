@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import studentRepository from "../repositories/student.repository.js";
+import userService from "../services/UserService.js"
 
 class StudentService {
   async createStudent(data) {

@@ -42,6 +42,38 @@ class StudentActionController {
     }
   }
 
+  async getScore(req, res) {
+  try {
+
+    const score = await studentActionService.getScore(req.user.id);
+
+    return res.status(200).json(score);
+
+  } catch (error) {
+
+    return res.status(400).json({
+      message: error.message
+    });
+
+  }
+}
+
+async ranking(req, res) {
+  try {
+
+    const ranking = await studentActionService.getRanking();
+
+    return res.status(200).json(ranking);
+
+  } catch (error) {
+
+    return res.status(400).json({
+      message: error.message
+    });
+
+  }
+}
+
 }
 
 export default new StudentActionController();

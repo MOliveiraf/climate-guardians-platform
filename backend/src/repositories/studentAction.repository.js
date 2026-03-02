@@ -23,6 +23,49 @@ class StudentActionRepository {
     });
   }
 
+  async getTotalPoints(studentId) {
+
+  const actions = await prisma.studentAction.findMany({
+    where: { studentId },
+    include: {
+      action: true
+    }
+  });
+
+  const total = actions.reduce((sum, item) => {
+    return sum + item.action.points;
+  }, 0);
+
+  return total;
+}
+async getRanking() {
+  const ranking = await prisma.studentAction.findMany({
+    include: {
+      student: true,
+      action: true
+    }
+  });
+
+  const map = {};
+
+  ranking.forEach((item) => {
+    const studentId = item.studentId;
+
+    if (!map[studentId]) {
+      map[studentId] = {
+        studentId,
+        name: item.student.name,
+        points: 0
+      };
+    }
+
+    map[studentId].points += item.action.points;
+  });
+
+  return Object.values(map).sort((a, b) => b.points - a.points);
+}
+
+
 }
 
 export default new StudentActionRepository();

@@ -1,5 +1,5 @@
 import studentActionRepository from "../repositories/studentAction.repository.js";
-import studentRepository from "../repositories/student.repository.js";
+import { calculatePlanetState } from "../utils/planetState.js";
 import prisma from "../prisma/index.js";
 
 class StudentActionService { 
@@ -70,6 +70,32 @@ class StudentActionService {
 
     return studentActionRepository.findByStudent(student.id);
   }
+
+  async getScore(userId) {
+
+  const student = await prisma.student.findUnique({
+    where: { userId }
+  });
+
+  if (!student) {
+    throw new Error("Student not found.");
+  }
+
+  const totalPoints = await studentActionRepository.getTotalPoints(student.id);
+
+  const planet = calculatePlanetState(totalPoints);
+
+  return {
+    studentId: student.id,
+    totalPoints,
+    planetState: planet.state,
+    planetImage: planet.image
+  };
+}
+
+async getRanking() {
+  return studentActionRepository.getRanking();
+}
 
 }
 
