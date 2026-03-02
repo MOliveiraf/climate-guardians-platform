@@ -55,14 +55,14 @@ async getRanking() {
       map[studentId] = {
         studentId,
         name: item.student.name,
-        points: 0
+        totalPoints: 0
       };
     }
 
-    map[studentId].points += item.action.points;
+    map[studentId].totalPoints += item.action.points;
   });
 
-  return Object.values(map).sort((a, b) => b.points - a.points);
+  return Object.values(map).sort((a, b) => b.totalPoints - a.totalPoints);
 }
 
 
