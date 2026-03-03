@@ -109,28 +109,47 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="app-container">
-      <div style={{ padding: "20px" }}>
-        <h1>Climate Guardians Dashboard</h1>
+  <div className="dashboard-container">
 
-        <button onClick={handleLogout}>Logout</button>
+    {/* HEADER */}
+    <div className="dashboard-header">
+      <h1>🌍 Climate Guardians</h1>
+      <button className="logout-button" onClick={handleLogout}>
+        Sair
+      </button>
+    </div>
 
-        <hr />
-        <PlanetStatus planet={planet} />
-        <hr />
+    {/* AREA PRINCIPAL CENTRAL */}
+<div className="main-grid">
+  
+  <div className="missions-area">
+    <h2>🌱 Missões Ecológicas</h2>
+    <ActionsList
+      actions={actions}
+      executeAction={executeAction}
+      playAudio={playAudio}
+    />
+  </div>
 
-        <ActionsList
-          actions={actions}
-          executeAction={executeAction}
-          playAudio={playAudio}
-        />
+  <div className="planet-center">
+    <PlanetStatus planet={planet} />
+  </div>
 
-        <hr />
+</div>
+
+    {/* GRID INFERIOR */}
+    <div className="bottom-grid">
+      <div className="section-card">
+        <h2>🏆 Liga dos Guardiões</h2>
         <RankingList ranking={ranking} />
-        <hr />
+      </div>
 
+      <div className="section-card">
+        <h2>⭐ Suas Conquistas</h2>
         <ActionHistory history={history} playAudio={playAudio} />
       </div>
     </div>
-  );
+
+  </div>
+);
 }

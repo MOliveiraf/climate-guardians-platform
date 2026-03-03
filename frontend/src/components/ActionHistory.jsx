@@ -19,36 +19,44 @@ export default function ActionHistory({ history, playAudio }) {
         <div
           key={item.id}
           style={{
-            border: "1px solid #ddd",
-            padding: "10px",
-            borderRadius: "8px",
-            marginBottom: "10px",
-            background: "#7d6262",
+            border: "1px solid #e0e0e0",
+            padding: "15px",
+            borderRadius: "15px",
+            marginBottom: "15px",
+            background: "#f8f9fa",
             display: "flex",
             alignItems: "center",
-            gap: "10px",
+            gap: "15px",
           }}
-        >
-          <img
-            src={`http://localhost:3000${item.action.imageUrl}`}
-            alt={item.action.title}
-            width="50"
-          />
+        >          
+          
+          {item.action.imageUrl && (
+            <img
+              src={`http://localhost:3000${item.action.imageUrl}`}
+              alt={item.action.title}
+              style={{
+                width: "60px",
+                height: "60px",
+                objectFit: "cover",
+                borderRadius: "12px",
+              }}
+            />
+          )}
+          
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: "bold", fontSize: "16px" }}>
+              {item.action.title}
+            </div>
 
-          <div style={{ fontWeight: "bold" }}>{item.action.title}</div>
+            <div>⭐ +{item.action.points} pts</div>
 
-          <div>⭐ +{item.action.points} pts</div>
-
-          <div style={{ fontSize: "12px", color: "#666" }}>
-            📅 {formatDate(item.createdAt)}
+            <div style={{ fontSize: "12px", color: "#666" }}>
+              📅 {formatDate(item.createdAt)}
+            </div>
           </div>
-
-          {/* 🔊 Botão para ouvir novamente */}
+          
           {item.action.audioUrl && (
-            <button
-              style={{ marginLeft: "auto" }}
-              onClick={() => playAudio(item.action.audioUrl)}
-            >
+            <button onClick={() => playAudio(item.action.audioUrl)}>
               🔊 Hear Again
             </button>
           )}
