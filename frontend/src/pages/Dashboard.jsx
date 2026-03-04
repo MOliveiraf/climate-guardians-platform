@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 import PlanetStatus from "../components/PlanetStatus";
-import ActionsList from "../components/ActionsList";
 import RankingList from "../components/RankingList";
 import ActionHistory from "../components/ActionHistory";
 
@@ -21,7 +20,6 @@ export default function Dashboard() {
   function playAudio(url) {
     if (!url) return;
 
-    // Se já existir um áudio tocando, parar
     if (audioRef.current) {
       audioRef.current.pause();
     }
@@ -67,21 +65,17 @@ export default function Dashboard() {
     }
   }
 
-  async function executeAction(actionId) {
+  async function executeAction(actionId, audioUrl) {
     try {
-      const response = await api.post("/student-actions", {
-        actionId,
-      });
+      await api.post("/student-actions", { actionId });
 
-      const result = response.data;
-
-      alert("Ação registrada com sucesso!");
+      if (audioUrl) {
+        playAudio(audioUrl);
+      }
 
       await fetchRanking();
       await fetchPlanet();
       await fetchHistory();
-
-      return result;
     } catch (error) {
       alert(error.response?.data?.message || "Erro ao executar ação");
     }
@@ -109,47 +103,69 @@ export default function Dashboard() {
   }
 
   return (
-  <div className="dashboard-container">
-
-    {/* HEADER */}
-    <div className="dashboard-header">
-      <h1>🌍 Climate Guardians</h1>
-      <button className="logout-button" onClick={handleLogout}>
-        Sair
-      </button>
-    </div>
-
-    {/* AREA PRINCIPAL CENTRAL */}
-<div className="main-grid">
-  
-  <div className="missions-area">
-    <h2>🌱 Missões Ecológicas</h2>
-    <ActionsList
-      actions={actions}
-      executeAction={executeAction}
-      playAudio={playAudio}
-    />
-  </div>
-
-  <div className="planet-center">
-    <PlanetStatus planet={planet} />
-  </div>
-
-</div>
-
-    {/* GRID INFERIOR */}
-    <div className="bottom-grid">
-      <div className="section-card">
-        <h2>🏆 Liga dos Guardiões</h2>
-        <RankingList ranking={ranking} />
+    <div className="dashboard-container">
+      {/* HEADER */}
+      <div className="dashboard-header">
+        <h1>🌍 Climate Guardians</h1>
+        <button className="logout-button" onClick={handleLogout}>
+          Sair
+        </button>
       </div>
 
-      <div className="section-card">
-        <h2>⭐ Suas Conquistas</h2>
-        <ActionHistory history={history} playAudio={playAudio} />
+      {/* LAYOUT 3 COLUNAS */}
+      <div className="main-layout">
+        {/* ESQUERDA (Positivas + Neutras) */}
+        <div className="actions-column">
+          {actions
+            .filter((action) => action.type !== "NEGATIVE")
+            .map((action) => (
+              <button
+                key={action.id}
+                className="action-btn"
+                onClick={() =>
+                  executeAction(action.id, action.audioUrl)
+                }
+              >
+                {action.title}
+              </button>
+            ))}
+        </div>
+
+        {/* CENTRO */}
+        <div className="planet-column">
+          <PlanetStatus planet={planet} />
+        </div>
+
+        {/* DIREITA (Negativas) */}
+        <div className="actions-column">
+          {actions
+            .filter((action) => action.type === "NEGATIVE")
+            .map((action) => (
+              <button
+                key={action.id}
+                className="action-btn negative"
+                onClick={() =>
+                  executeAction(action.id, action.audioUrl)
+                }
+              >
+                {action.title}
+              </button>
+            ))}
+        </div>
+      </div>
+
+      {/* PARTE INFERIOR */}
+      <div className="bottom-grid">
+        <div className="section-card">
+          <h2>🏆 Liga dos Guardiões</h2>
+          <RankingList ranking={ranking} />
+        </div>
+
+        <div className="section-card">
+          <h2>⭐ Suas Conquistas</h2>
+          <ActionHistory history={history} playAudio={playAudio} />
+        </div>
       </div>
     </div>
-
-  </div>
-);
+  );
 }
