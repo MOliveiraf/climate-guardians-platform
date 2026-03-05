@@ -2,7 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+
 export default function Login() {
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
@@ -12,12 +14,18 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/auth/login",
+        {
+          email,
+          password,
+        }
+      );
+      console.log("LOGIN RESPONSE:", response.data); // 👈 COLOQUE AQUI
 
       localStorage.setItem("token", response.data.user.token);
+      localStorage.setItem("role", response.data.user.role);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
       // Ativa animação
       setIsAnimating(true);
@@ -25,8 +33,7 @@ export default function Login() {
       // Aguarda 3 segundos antes de navegar
       setTimeout(() => {
         navigate("/dashboard");
-      }, 3000);
-
+      }, 6000);
     } catch (error) {
       alert("Login failed");
       console.error(error);
@@ -34,8 +41,9 @@ export default function Login() {
   }
 
   return (
+    
     <div className="login-container">
-
+     
       {!isAnimating ? (
         <div>
           <h1>Climate Guardians 🌍</h1>
@@ -47,6 +55,7 @@ export default function Login() {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
 
@@ -56,11 +65,23 @@ export default function Login() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
 
             <button type="submit">Entrar</button>
           </form>
+
+          <hr />
+
+          <p>Ainda não tem conta?</p>
+
+          <button
+            type="button"
+            onClick={() => navigate("/register")}
+          >
+            Cadastrar
+          </button>
         </div>
       ) : (
         <div className="login-animation">
@@ -73,7 +94,6 @@ export default function Login() {
           <p>Bem-vindo, Guardião do Clima!</p>
         </div>
       )}
-
     </div>
   );
 }

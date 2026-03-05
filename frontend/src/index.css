@@ -9,9 +9,6 @@
 body {
   font-family: "Comic Sans MS", "Poppins", system-ui, sans-serif;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background: linear-gradient(135deg, #74c0fc, #a5d8ff, #d0ebff);
 }
 
@@ -27,161 +24,101 @@ h2 {
   color: #1971c2;
 }
 
-/* ================= CARD PADRÃO ================= */
-.card,
-.section-card,
-.app-container,
-.login-container {
-  background: white;
-  border-radius: 25px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-}
+/* ================= DASHBOARD ================= */
 
-.app-container {
-  width: 95%;
-  max-width: 1000px;
+.dashboard-container {
   padding: 30px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #a8e6ff, #d4f8e8);
 }
 
-.section-card {
-  padding: 25px;
-  margin-bottom: 30px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-}
+/* HEADER */
 
-.login-container {
-  width: 350px;
-  padding: 40px;
+.dashboard-header {
+  position: relative;
   text-align: center;
+  margin-bottom: 40px;
 }
 
-/* ================= PLANETA ================= */
-.planet-container {
+/* BOTÕES ESQUERDA */
+
+.left-controls {
+  position: absolute;
+  left: 0;
+  top: 0;
+
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-bottom: 25px;
+  gap: 10px;
 }
 
-.planet-container img {
-  width: 220px;
-  transition: transform 0.3s ease;
-}
+/* BADGE USUÁRIO */
 
-.planet-container img:hover {
-  transform: scale(1.05);
-}
-
-/* ================= SCORE ================= */
-.score-box {
-  background: #e6fcf5;
-  padding: 15px 25px;
-  border-radius: 20px;
-  font-size: 1.3rem;
-  font-weight: bold;
+.user-badge {
   margin-top: 10px;
-  color: #087f5b;
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.user-badge.teacher {
+  background: #ffe066;
+}
+
+.user-badge.student {
+  background: #74c0fc;
+  color: white;
 }
 
 /* ================= BOTÕES ================= */
-button,
-.action-btn,
-.logout-button {
+
+button {
   border: none;
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
+  padding: 12px 18px;
   transition: 0.3s;
 }
 
-button {
-  background: #4dabf7;
-  color: white;
-  padding: 12px 20px;
-  margin: 5px;
-}
-
 button:hover {
-  background: #339af0;
   transform: translateY(-2px);
 }
 
-button:active {
-  transform: scale(0.97);
-}
-
-.action-btn {
-  padding: 15px;
-  border-radius: 12px;
-  background: #4caf50;
+.teacher-button {
+  background: #845ef7;
   color: white;
 }
 
-.action-btn:hover {
-  transform: scale(1.05);
-  background: #388e3c;
-}
-
-.action-btn.negative {
-  background: #e53935;
-}
-
-.action-btn.negative:hover {
-  background: #c62828;
+.teacher-button:hover {
+  background: #7048e8;
 }
 
 .logout-button {
   background: #ff6b6b;
-  padding: 10px 18px;
   color: white;
 }
 
 .logout-button:hover {
-  transform: scale(1.05);
+  background: #fa5252;
 }
 
-/* ================= INPUT ================= */
-input {
-  padding: 12px;
-  border-radius: 15px;
-  border: 2px solid #a5d8ff;
-  width: 100%;
-  margin-bottom: 15px;
-  font-size: 1rem;
-}
+/* ================= PLANETA ================= */
 
-input:focus {
-  outline: none;
-  border-color: #4dabf7;
-}
-
-/* ================= DASHBOARD ================= */
-.dashboard-container {
-  padding: 30px;
-  background: linear-gradient(135deg, #a8e6ff, #d4f8e8);
-  min-height: 100vh;
-}
-
-.dashboard-header {
+.planet-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 30px;
 }
 
-.hero-section {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 40px;
+.planet-container img {
+  width: 220px;
 }
 
-.bottom-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 25px;
-}
+/* ================= LAYOUT ================= */
 
-/* ================= LAYOUT PRINCIPAL ================= */
 .main-layout {
   display: flex;
   justify-content: space-between;
@@ -205,63 +142,45 @@ input:focus {
   width: 40%;
 }
 
-/* ================= LOGIN ANIMATION ================= */
-.login-animation {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+/* ================= ACTION BUTTON ================= */
+
+.action-btn {
+  padding: 15px;
+  border-radius: 12px;
+  background: #4caf50;
   color: white;
-  text-align: center;
-  animation: fadeIn 0.6s ease-in-out;
 }
 
-.planet-animation {
-  width: 320px;
-  max-width: 70vw;
-  margin-bottom: 25px;
-  border-radius: 50%;
-  padding: 20px;
-  object-fit: cover;
-  background: radial-gradient(circle, #1ecf8b, #0f2027);
-  animation:
-    planetAppear 1s ease-out forwards,
-    planetRotate 6s linear infinite;
-  filter: drop-shadow(0 0 20px rgba(0, 255, 150, 0.6));
-  box-shadow:
-    0 0 40px rgba(0, 255, 150, 0.6),
-    0 0 80px rgba(0, 255, 150, 0.4);
+.action-btn:hover {
+  transform: scale(1.05);
+  background: #388e3c;
 }
 
-/* ================= ANIMAÇÕES ================= */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.action-btn.negative {
+  background: #e53935;
 }
 
-@keyframes planetAppear {
-  from {
-    transform: scale(0.4);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+.action-btn.negative:hover {
+  background: #c62828;
 }
 
-@keyframes planetRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* ================= CARDS ================= */
+
+.section-card {
+  background: white;
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
 }
 
 /* ================= RESPONSIVO ================= */
+
 @media (max-width: 900px) {
   .main-layout {
     flex-direction: column;
@@ -283,25 +202,147 @@ input:focus {
   }
 }
 
-@media (max-width: 600px) {
-  .planet-container img {
-    width: 150px;
-  }
+/* ================= LOGIN / REGISTER ================= */
 
-  h1 {
-    font-size: 2rem;
-  }
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.history-scroll::-webkit-scrollbar {
-  width: 8px;
+.login-container {
+  width: 360px;
+  padding: 40px;
+  background: white;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+
+  margin: auto;
+  margin-top: 10vh;
 }
 
-.history-scroll::-webkit-scrollbar-thumb {
+.card {
+  background: white;
+  border-radius: 25px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ================= INPUT ================= */
+
+input {
+  padding: 12px;
+  border-radius: 15px;
+  border: 2px solid #a5d8ff;
+  width: 100%;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4dabf7;
+}
+
+/* ================= BOTÃO PRINCIPAL ================= */
+
+.btn-primary {
   background: #4dabf7;
-  border-radius: 10px;
+  color: white;
+  width: 100%;
+  margin-top: 10px;
 }
 
-.history-scroll::-webkit-scrollbar-track {
-  background: #e9ecef;
+.btn-primary:hover {
+  background: #339af0;
+}
+
+/* ================= LOGIN ANIMATION ================= */
+
+.login-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+  text-align: center;
+
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.planet-animation {
+  width: 320px;
+  max-width: 70vw;
+  margin-bottom: 25px;
+  border-radius: 50%;
+  padding: 20px;
+
+  object-fit: cover;
+
+  background: radial-gradient(circle, #1ecf8b, #0f2027);
+
+  animation:
+    planetAppear 1s ease-out forwards,
+    planetRotate 6s linear infinite;
+
+  filter: drop-shadow(0 0 20px rgba(0, 255, 150, 0.6));
+
+  box-shadow:
+    0 0 40px rgba(0, 255, 150, 0.6),
+    0 0 80px rgba(0, 255, 150, 0.4);
+}
+
+/* ================= ANIMAÇÕES ================= */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes planetAppear {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes planetRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: linear-gradient(135deg, #4dabf7, #228be6);
+  color: white;
+
+  font-size: 1rem;
+  font-weight: bold;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #339af0, #1c7ed6);
+  transform: translateY(-2px);
 }

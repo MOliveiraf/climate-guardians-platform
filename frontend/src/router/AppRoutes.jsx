@@ -3,6 +3,7 @@ import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import PrivateRoute from "../components/PrivateRoute";
 import Register from "../pages/Register";
+import Teacher from "../pages/Teacher";
 
 export default function AppRoutes() {
   return (
@@ -10,7 +11,7 @@ export default function AppRoutes() {
       <Routes>
 
         {/* Redireciona rota inicial */}
-        <Route path="/" element={<Navigate to="/register" />} />
+        <Route path="/" element={<Navigate to="/login" />} />
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
@@ -20,6 +21,15 @@ export default function AppRoutes() {
           element={
             <PrivateRoute>
               <Dashboard />
+            </PrivateRoute>
+          }
+        />
+         {/* Rota exclusiva TEACHER */}
+        <Route 
+          path="/teacher" 
+          element={
+            <PrivateRoute allowedRoles={["TEACHER"]}>
+              <Teacher />
             </PrivateRoute>
           }
         />
