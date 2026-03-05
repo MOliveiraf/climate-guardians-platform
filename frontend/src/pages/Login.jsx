@@ -20,8 +20,7 @@ export default function Login() {
           email,
           password,
         }
-      );
-      console.log("LOGIN RESPONSE:", response.data); // 👈 COLOQUE AQUI
+      );       
 
       localStorage.setItem("token", response.data.user.token);
       localStorage.setItem("role", response.data.user.role);
@@ -30,7 +29,7 @@ export default function Login() {
       // Ativa animação
       setIsAnimating(true);
 
-      // Aguarda 3 segundos antes de navegar
+      // Aguarda 6 segundos antes de navegar
       setTimeout(() => {
         navigate("/dashboard");
       }, 6000);

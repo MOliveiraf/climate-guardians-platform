@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("🌱 Seeding database...");
+  console.log("Seeding database...");
 
   // Limpar tabelas na ordem correta
   await prisma.studentAction.deleteMany();
@@ -138,8 +138,8 @@ async function main() {
     },
   });
 
-  console.log("👩‍🏫 Teacher criado com sucesso!");
-  console.log("✅ Seed finalizado com sucesso.");
+  console.log(" Teacher criado com sucesso!");
+  console.log(" Seed finalizado com sucesso.");
 }
 
 main()

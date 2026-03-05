@@ -7,7 +7,6 @@ import {
 
 const router = Router();
 
-// 📖 Todos autenticados podem visualizar
 router.get(
   "/",
   authenticate,
@@ -22,7 +21,7 @@ router.get(
   actionController.findById
 );
 
-// 🔐 Apenas TEACHER pode criar
+// Apenas TEACHER pode criar
 router.post(
   "/",
   authenticate,
@@ -30,7 +29,7 @@ router.post(
   actionController.create
 );
 
-// 🔐 Apenas TEACHER pode deletar
+// Apenas TEACHER pode deletar
 router.delete(
   "/:id",
   authenticate,

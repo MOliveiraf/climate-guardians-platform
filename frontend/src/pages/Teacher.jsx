@@ -112,8 +112,7 @@ export default function Teacher() {
         </button>
         </div>
       </div>
-
-      {/* 1️⃣ LISTA DE ESTUDANTES */}
+      
       <h2>👩‍🎓 Lista de Estudantes</h2>
       {students.map((student) => (
         
@@ -134,7 +133,7 @@ export default function Teacher() {
         </div>
       ))}
 
-      {/* 2️⃣ CADASTRAR AÇÃO */}
+      {/* CADASTRAR AÇÃO */}
       <h2 style={{ marginTop: "40px" }}>➕ Cadastrar Ação</h2>
       <form onSubmit={handleCreate} style={{ marginBottom: "30px" }}>
         <input
@@ -188,7 +187,7 @@ export default function Teacher() {
         </button>
       </form>
 
-      {/* 3️⃣ LISTA DE ACTIONS COM SCROLL */}
+      {/* LISTA DE ACTIONS COM SCROLL */}
       <h2>📋 Lista de Actions</h2>
       <div
         style={{

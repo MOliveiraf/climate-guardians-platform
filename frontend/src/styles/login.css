@@ -1,0 +1,18 @@
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  width: 360px;
+  padding: 40px;
+  background: white;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+
+  margin: auto;
+  margin-top: 10vh;
+}

@@ -15,7 +15,7 @@ export default function ActionHistory({ history, playAudio }) {
 
       {history.length === 0 && <p>No actions executed yet.</p>}
 
-      {/* 👇 CONTAINER COM SCROLL */}
+      {/* CONTAINER COM SCROLL */}
       <div
         style={{
           maxHeight: "350px",
