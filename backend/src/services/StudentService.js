@@ -97,7 +97,7 @@ class StudentService {
       throw new Error("Student not found.");
     }
 
-    return studentRepository.delete(id);
+    return studentRepository.deleteStudentWithRelations(id);
   }
 }
 

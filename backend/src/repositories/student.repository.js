@@ -68,6 +68,45 @@ class StudentRepository {
       include: this.baseInclude(),
     });
   }
+
+  async deleteStudentActions(studentId) {
+    return prisma.studentAction.deleteMany({
+      where: { studentId },
+    });
+  }
+
+  async deleteSessions(studentId) {
+    return prisma.session.deleteMany({
+      where: { studentId },
+    });
+  }
+  async deleteStudentWithRelations(studentId) {
+    const student = await prisma.student.findUnique({
+      where: { id: studentId },
+    });
+
+    if (!student) {
+      throw new Error("Student not found");
+    }
+
+    return prisma.$transaction([
+      prisma.studentAction.deleteMany({
+        where: { studentId },
+      }),
+
+      prisma.session.deleteMany({
+        where: { studentId },
+      }),
+
+      prisma.student.delete({
+        where: { id: studentId },
+      }),
+
+      prisma.user.delete({
+        where: { id: student.userId },
+      }),
+    ]);
+  }
 }
 
 export default new StudentRepository();
